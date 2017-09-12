@@ -6,29 +6,48 @@ function onBoton(element){
 function offBoton(element){
   element.style.padding="0%"
 }
+//punto 5
 function imprimirNumero(id){
-
+if(pantalla.innerHTML.length<9){
   if(pantalla.value != 0){
     pantalla.innerHTML=pantalla.value+id;
-    pantalla.value=pantalla.innerHTML;
+    pantalla.value=Number(pantalla.innerHTML);
   }else{
     pantalla.innerHTML=id
     pantalla.value=id;
   }
   return pantalla.value
 }
+}
+//punto 6
 function reinicio(){
   pantalla.innerHTML="0";
   pantalla.value=0;
 }
+//punto 7
 function decimal(numero){
   if (numero%1 == 0 && numero !=NaN){
-    imprimirNumero(".")
+    imprimirNumero("0.")
   }
   else{
     alert("operación no permitida")
   }
   return pantalla.value
+}
+//punto 8
+function signo(){
+  valor1=Number(pantalla.value);
+  resultado=valor1*(-1)
+  return resultado;
+}
+//punto 9
+function validacion(valor){
+  if (valor.length>8|| valor<0.0000001){
+    pantalla.innerHTML="Error"
+  }else{
+    pantalla.innerHTML=valor
+    pantalla.value=valor;
+  }
 }
 function operar(){
   var valor1=Number(pantalla.value);
@@ -62,6 +81,7 @@ switch (orden) {
   }
 
 }
+
 var calculadora = {
     inicio: function(){
       pantalla.innerHTML="0";
@@ -88,6 +108,9 @@ var calculadora = {
       ac.onclick = reinicio;
       punto.onclick = this.eventoDecimal;
       igual.onclick = this.eventoIgual;
+      signo.onmousedown = this.eventoOnBoton;
+      signo.onmouseup = this.eventoOffBoton;
+      signo.onclick = this.eventoSigno;
 
     },
     eventoOnBoton: function(event){
@@ -110,9 +133,14 @@ var calculadora = {
     eventoIgual: function (event){
       valor2=Number(pantalla.value);
       var resultado = respuesta(orden,valor1,valor2);
-      pantalla.innerHTML=resultado;
+      validacion(resultado.toString());
+      pantalla.value=0;
     },
-
+    eventoSigno: function (event){
+      resultado = signo();
+      validacion(resultado.toString());
+      pantalla.value=resultado;
+    }
 
 }
 
