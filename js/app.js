@@ -1,4 +1,5 @@
 var pantalla=document.querySelectorAll('.pantalla span')[0];
+var memoria=0;
 function onBoton(element){
   element.style.padding="0.7%";
 
@@ -23,6 +24,7 @@ if(pantalla.innerHTML.length<9){
 function reinicio(){
   pantalla.innerHTML="0";
   pantalla.value=0;
+  memoria = 0;
 }
 //punto 7
 function decimal(numero){
@@ -42,7 +44,7 @@ function signo(){
 }
 //punto 9
 function validacion(valor){
-  if (valor.length>8|| valor<0.0000001){
+  if (valor.length>8){
     pantalla.innerHTML="Error"
   }else{
     pantalla.innerHTML=valor
@@ -86,6 +88,7 @@ var calculadora = {
     inicio: function(){
       pantalla.innerHTML="0";
       pantalla.value=0;
+      memoria=0;
       this.asignarEventoBotones('numero','operacion');
     },
     asignarEventoBotones: function(selector1,selector2){
@@ -128,6 +131,7 @@ var calculadora = {
     eventoOperacion: function(event){
       valor1=operar();
       orden = event.target.id
+      memoria=valor1
 
     },
     eventoIgual: function (event){
